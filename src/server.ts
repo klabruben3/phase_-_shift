@@ -35,6 +35,7 @@ app.prepare().then(() => {
           ghosts: createGhosts(),
         };
       }
+      console.log("hello_world")
 
       rooms[roomName].players[socket.id] = {
         id: socket.id,
