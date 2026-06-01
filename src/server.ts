@@ -8,6 +8,7 @@ import {
   startGameLoop,
   endGameLoop,
   broadcastRoom,
+  getLocalIP,
 } from "./game";
 import { speed } from "./game/constants";
 
@@ -95,6 +96,10 @@ app.prepare().then(() => {
   });
 
   httpServer.listen(port, () => {
-    console.log("server running on", port);
+    const ip = getLocalIP();
+    console.log(`server running on:
+    ├──  http://localhost:${port},
+    └──  http://${ip}:${port}
+      `);
   });
 });

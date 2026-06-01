@@ -4,3 +4,4 @@ export * from "./loop";
 export * from "./state";
 export * from "./types";
 export * from "./skin";
+export * from "./getLocalIP";

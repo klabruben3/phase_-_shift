@@ -144,6 +144,11 @@ export default function MatchmakingScreen({
                       onChange={(e) =>
                         setUsername(e.target.value.toUpperCase())
                       }
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleJoinMatch();
+                        }
+                      }}
                       placeholder="ENTER USERNAME"
                       className="w-full border border-border bg-background py-3 pl-8 pr-4 text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
                       style={{
