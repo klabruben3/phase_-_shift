@@ -138,6 +138,7 @@ export default function MatchmakingScreen({
                       &gt;
                     </span>
                     <input
+                      autoFocus={true}
                       type="text"
                       maxLength={16}
                       value={username}

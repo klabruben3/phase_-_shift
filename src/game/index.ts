@@ -5,3 +5,4 @@ export * from "./state";
 export * from "./types";
 export * from "./skin";
 export * from "./getLocalIP";
+export * from "./inputs";

@@ -8,7 +8,6 @@ import {
   startGameLoop,
   endGameLoop,
   broadcastRoom,
-  getLocalIP,
 } from "./game";
 import { speed } from "./game/constants";
 
@@ -35,7 +34,6 @@ app.prepare().then(() => {
           ghosts: createGhosts(),
         };
       }
-      console.log("hello_world")
 
       rooms[roomName].players[socket.id] = {
         id: socket.id,
@@ -97,10 +95,6 @@ app.prepare().then(() => {
   });
 
   httpServer.listen(port, () => {
-    const ip = getLocalIP();
-    console.log(`server running on:
-    ├──  http://localhost:${port},
-    └──  http://${ip}:${port}
-      `);
+    console.log("server running on port 3000");
   });
 });
