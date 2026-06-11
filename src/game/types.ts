@@ -56,3 +56,9 @@ export interface RoomState {
   players: Record<string, Player>;
   ghosts: Record<Color, Ghost>;
 }
+
+export type MouseMoveProp =
+  | "mouseUp"
+  | "mouseDown"
+  | "mouseLeft"
+  | "mouseRight";

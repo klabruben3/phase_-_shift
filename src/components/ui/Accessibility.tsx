@@ -1,21 +1,70 @@
 "use client";
 
+import { MouseMoveProp, sendMouseInput } from "@/game";
 import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   ChevronUp,
 } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function Accessibility() {
-  const handleClick = () => {
-    document.body.requestPointerLock();
-  };
+  const controlRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const control = controlRef.current;
+
+    if (!control) return;
+
+    const handleClick = () => {
+      control.requestPointerLock();
+    };
+
+    let mouseDirection: MouseMoveProp | null = null;
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!document.pointerLockElement) return;
+
+      const magnitude = Math.hypot(e.movementX, e.movementY);
+      if (magnitude < 10) return;
+
+      const angle = Math.atan2(e.movementY, e.movementX);
+
+      let currentDirection: MouseMoveProp;
+
+      if (angle >= -Math.PI / 4 && angle < Math.PI / 4) {
+        currentDirection = "mouseRight";
+      } else if (angle >= Math.PI / 4 && angle < (3 * Math.PI) / 4) {
+        currentDirection = "mouseDown";
+      } else if (angle >= -(3 * Math.PI) / 4 && angle < -Math.PI / 4) {
+        currentDirection = "mouseUp";
+      } else {
+        currentDirection = "mouseLeft";
+      }
+
+      if (mouseDirection !== currentDirection) {
+        console.log(currentDirection);
+        sendMouseInput(currentDirection);
+
+        mouseDirection = currentDirection;
+      }
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+
+    control.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+
+      control.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
     <div
-      onClick={handleClick}
-      className="pointer-events-none absolute bottom-20 left-4 md:hidden"
+      ref={controlRef}
+      className="pointer-events-none absolute bottom-20 left-4"
     >
       <div className="pointer-events-auto relative h-28 w-28">
         <div className="absolute inset-0 border border-border bg-card" />
